@@ -1,3 +1,8 @@
+# Danielle, Kensaku, Alexander, Adrianna, Eddie
+from requests import Session
+import json
+session = Session()
+
 #list to hold data
 latLngList = []
 
