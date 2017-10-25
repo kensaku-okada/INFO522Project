@@ -20,16 +20,27 @@ Four additional R packages are required:
     + 509627-iNaturalist.txt: Western Giant Swallowtail, _Papilio rumiko_
     + 59125-iNaturalist.txt: Great Copper, _Lycaena xanthoides_
   + wc2-5: climate data at 2.5 minute resolution from [WorldClim](http://www.worldclim.org)
+  + gbif: data harvested from GBIF for iNaturalist taxon_id values; most files
+  _not_ under version control (> 2GB each);
+    + taxon-ids.txt: tab-delimited text files of unique species-level taxon_id
+    values for records from Canada, Mexico, and United States; incluedes two
+    columns: `taxonID` and `scientificName`
 + output (not included in repository, but this structure is assumed on local)
   + images
   + rasters
 + scripts
+  + gbif-butterflies.sh: First pass of processing GBIF data dump to get taxon_ids
+  for iNaturalist data; see also get-taxon-id-from-gbif.py
   + get-observation-data.R: Harvest data from iNaturalist using their API; 
   called from command line terminal
     + Usage: `Rscript --vanilla get-observation-data.R <taxon_id>`
+    + Example: `Rscript --vanilla get-observation-data.R 60606`
+  + get-taxon-id-from-gbif.py: Extract relevant taxon_id values from GBIF data 
+  dump; see also gbif-butterflies.sh. Produces data/gbif/taxon-ids.txt
   + run-sdm.R: Run species distribution model and create map and raster output; 
   called from command line terminal
-    + Usage: `Rscript --vanilla run-sdm.R <path/to/data> <output-file-prefix>`
+    + Usage: `Rscript --vanilla run-sdm.R <path/to/data/file> <output-file-prefix> <path/to/output/directory/>`
+    + Example: `Rscript --vanilla run-sdm.R data/inaturalist/60606-iNaturalist.txt 60606 output/`
   + sdm-for-ACIC-lecture.R: Script to create map graphic used in ACIC lecture
   + sdm-iNat-melinus.R: Pilot species distribution modeling for _Strymon melinus_
   + sdm-iNat-xanthoides.R: Pilot species distribution modeling for _Lycaena xanthoides_
@@ -46,6 +57,29 @@ Four additional R packages are required:
 
 Repeat steps 4-7 for remaining months  
 Repeat steps 3-7 for remaining species
+
+### Species Identifiers
+**Challenge**: To perform analyses on all North American species of butterflies, 
+we will need the taxon_id for all species we are interested in. There is not an 
+easy way to do this using the iNaturalist API (see the [discussion](#inaturalist)
+in the Resources section below). However, we can download an iNaturalist database 
+dump from GBIF at [https://www.google.com/url?q=https%3A%2F%2Fwww.gbif.org%2Fdataset%2F50c9509d-22c7-4a22-a47d-8c48425ef4a7&sa=D&sntz=1&usg=AFQjCNEzY1KC-xcJO1vgk6fhrSW-1_FoCA](https://www.google.com/url?q=https%3A%2F%2Fwww.gbif.org%2Fdataset%2F50c9509d-22c7-4a22-a47d-8c48425ef4a7&sa=D&sntz=1&usg=AFQjCNEzY1KC-xcJO1vgk6fhrSW-1_FoCA).
+The flat csv file does not contain enough information; namely it lack the taxon_id
+field. However, the Darwin Core archive _does_ include files with the necessary 
+information. The files occurrence.txt and verbatim.txt have the fields we need; the 
+latter is a smaller file, so we'll use that one (the column headers appear identical
+in both files, but some curation was performed to produce the occurrence.txt file).
+Among other fields, the ones we will be interested in are:
+
++ countryCode: We want US, CA, and MX records only
++ taxonID: This field has values to use in the taxon_id field in the iNaturalist API
++ scientificName: The name of the organism
+
+**Update**: the file data/gbif/taxon-ids.txt has the taxonID and scientificName 
+field values. However, the data are for observations of _species_ rank; that is, 
+subspecies taxon IDs were not recorded. Will need to see if the API will return 
+observations for a species-level taxon ID if an identification has been made at 
+the subspecies level.
 
 ## Resources
 ### Species distribution models in R

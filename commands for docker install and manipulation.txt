@@ -1,0 +1,60 @@
+
+<<Docker installing>>
+https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-16-04
+
+
+<<install and run ubuntu on docker>>
+docker search ubuntu
+
+sudo docker pull ubuntu
+
+sudo docker run ubuntu
+
+<<run ubuntu as interactive mode>>
+sudo docker run -it ubuntu
+sudo docker run -it kensakuokada/ubuntu-nodejs
+
+<<commit the change on container>>
+sudo docker commit -m "What did you do to the image" -a "Author Name" container-id repository/new_image_name
+	---for my ubuntu on docker 
+	docker commit -m "pulling ubuntu, installing nodejs, the first time commit" -a "Kensakuokada" 732817bf031b kensakuokada/ubuntu-nodejs
+
+<<push the changes on container>>
+sudo docker login -u docker-registry-username
+	---for my ubuntu on docker
+	sudo docker login -u kensakuokada   --- the password is heaven246
+
+docker push docker-registry-username/docker-image-name
+	---for my ubuntu on docker 
+	sudo docker push kensakuokada/ubuntu-nodejs
+
+
+sudo docker ps -a
+sudo docker images
+sudo docker run -it <image Name>
+sudo docker start <repository id>
+sudo docker stop <repository id>
+sudo docker rm <repository id>
+sudo docker exec -it <epository id> bash
+
+
+
+
+TODO
+
+pull jupyter and commit and push as I did before.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

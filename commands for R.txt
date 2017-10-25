@@ -1,0 +1,81 @@
+>>>install R
+
+http://www.datascienceriot.com/r/install-ubuntu16/
+
+Rscript <file name including the extension>
+
+check the version
+cat /etc/lsb-release
+
+	DISTRIB_ID=Ubuntu
+	DISTRIB_RELEASE=17.04
+	DISTRIB_CODENAME=zesty <- use this.
+	DISTRIB_DESCRIPTION="Ubuntu 17.04"
+
+
+
+--change xenial into zesty
+sudo echo "deb http://cran.rstudio.com/bin/linux/ubuntu zesty/" | sudo tee -a /etc/apt/sources.list
+
+
+just follow the source above
+----------------------------
+
+>>>install packages (do after sarting R)
+
+start R = R
+
+
+install.packages("raster")
+install.packages("sp")
+install.packages("dismo")
+install.packages("maptools")
+
+
+-----------------------------
+
+>>>install Rstudio 
+
+goto this site
+https://www.rstudio.com/products/rstudio/download/#download
+
+
+------------------------------
+
+>>> run get-observation-data
+
+Rscript --vanilla get-observation-data.R <taxon_id>
+Rscript --vanilla get-observation-data.R 50931
+
+
+Rscript --vanilla run-sdm.R <path/to/data/file> <output-file-prefix> <path/to/output/directory/>
+Rscript --vanilla run-sdm.R data/inaturalist/60606-iNaturalist.txt 60606 ../output/ <- becareful, Jeff's original code may not work. This worked in my PC.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

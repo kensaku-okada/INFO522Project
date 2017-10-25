@@ -1,0 +1,14 @@
+
+
+git clone https://github.com/kensaku-okada/INFO522Project.git
+
+git status
+
+git add <file name or folder name>
+
+git commit -m "add comment here"
+
+git push or git push origin master (meanings are same. it pushes the files to the branch named "master" whose URL alias is origin)
+
+
+

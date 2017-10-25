@@ -90,6 +90,12 @@ colnames(obs.data) <- c("lon", "lat")
 duplicate.rows <- duplicated(x = obs.data)
 obs.data <- obs.data[!duplicate.rows, ]
 
+print("obs.data")
+print(obs.data)
+print("duplicate.rows")
+print(duplicate.rows)
+
+
 # Determine geographic extent of our data
 max.lat = ceiling(max(obs.data$lat))
 min.lat = floor(min(obs.data$lat))
@@ -102,7 +108,17 @@ bioclim.data <- getData(name = "worldclim",
                         var = "bio",
                         res = 2.5, # Could try for better resolution, 0.5, but would then need to provide lat & long...
                         path = "data/")
+
+print("bioclim.data1")
+print(bioclim.data)
+
+
 bioclim.data <- crop(x = bioclim.data, y = geographic.extent)
+
+
+print("bioclim.data2")
+print(bioclim.data)
+
 
 # Create pseudo-absence points (making them up, using 'background' approach)
 raster.files <- list.files(path = paste0(system.file(package = "dismo"), "/ex"),
@@ -117,6 +133,12 @@ colnames(bg) <- c("lon", "lat")
 # Data for observation sites (presence and background)
 presence.values <- extract(x = bioclim.data, y = obs.data)
 absence.values <- extract(x = bioclim.data, y = bg)
+
+print("presence.values")
+print(presence.values)
+print("absence.values")
+print(absence.values)
+
 
 ################################################################################
 # ANALYSIS

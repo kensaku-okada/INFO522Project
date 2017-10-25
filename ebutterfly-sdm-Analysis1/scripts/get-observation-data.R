@@ -13,6 +13,13 @@ if (length(args) < 1) {
              sep = "\n"))
 }
 
+
+print("args")
+print(args)
+print("usage.string")
+print(usage.string)
+
+
 inat.taxon.id <- args[1]
 if (is.na(suppressWarnings(as.numeric(inat.taxon.id)))) {
   stop(paste0("get-observation-data requires a numerical taxon id\n",
@@ -20,6 +27,11 @@ if (is.na(suppressWarnings(as.numeric(inat.taxon.id)))) {
               usage.string,
               "\n"))
 }
+
+
+print("inat.taxon.id")
+print(inat.taxon.id)
+
 
 page.num <- 1
 finished <- FALSE
@@ -29,13 +41,22 @@ obs.data <- NULL
 # just keep doing GET requests, incrementing the `page` key until we get a 
 # result with zero observations (up to 99 requests, more than that requires 
 # authentication)
+# while (!finished & page.num < 100) {
 while (!finished & page.num < 100) {
   obs.url <- paste0("http://inaturalist.org/observations.csv?&taxon_id=", 
                     inat.taxon.id, 
                     "&page=", 
                     page.num,
                     "&quality_grade=research&has[]=geo")
+
+  print("obs.url")
+  print(obs.url)
+
   temp.data <- read.csv(file = obs.url, stringsAsFactors = FALSE)
+
+  # print("temp.data")
+  # print(temp.data)
+
   if (nrow(temp.data) > 0) {
     if (is.null(obs.data)) {
       obs.data <- temp.data
@@ -47,6 +68,7 @@ while (!finished & page.num < 100) {
   }
   page.num <- page.num + 1
   rm(temp.data)
+
 }
 
 # As long as there are records, write them to file
@@ -58,6 +80,10 @@ if (nrow(obs.data) > 0) {
     dir.create("data/inaturalist")
   }
   outfile <- paste0("data/inaturalist/", inat.taxon.id, "-iNaturalist.txt")
+
+  print("outfile")
+  print(outfile)
+
   write.csv(x = obs.data, 
             file = outfile,
             row.names = FALSE,
