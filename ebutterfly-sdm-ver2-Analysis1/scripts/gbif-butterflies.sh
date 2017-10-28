@@ -20,6 +20,7 @@ for FAMILY in "${FAMILIES[@]}";
 do
   echo "Processing $FAMILY"
   # grep $FAMILY $INFILE | wc -l
+  # store the rows in $INFILE file having the word in $FAMILY into $TMP file 
   grep $FAMILY $INFILE >> $TMP
 done
 

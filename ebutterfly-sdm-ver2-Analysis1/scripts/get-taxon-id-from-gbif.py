@@ -43,6 +43,7 @@ def countries():
 # end countries
 
 
+# this file will be output by gbif-butterflies.sh
 infile = "../data/gbif/verbatim-butterflies.txt"
 outfile = "../data/gbif/taxon-ids.txt"
 
